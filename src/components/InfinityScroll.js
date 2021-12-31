@@ -1,6 +1,6 @@
 import React from 'react';
 
-const InfinityScroll = () => {
+const InfinityScroll = ({setLastPost, setList}) => {
   return (
     <div>
       

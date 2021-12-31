@@ -1,12 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const Card = ({title, contents, image}) => {
+const Card = ({title, contents, image }) => {
 
   return (
     <Container>
       <p>{title}</p>
-      <p>{contents}</p>
+      <p>{contents}</p>      
       <img src={image} alt='image'/>
     </Container>
   );
@@ -14,9 +14,9 @@ const Card = ({title, contents, image}) => {
 
 const Container = styled.div`
   display: flex;
-  flex-direction: column;
+  flex-direction: column;  
   align-items: cetner;
-  width: 30%;
+  width: 45%;
   border: 1px solid black;
 `;
 
