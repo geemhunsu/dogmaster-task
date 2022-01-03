@@ -6,4 +6,4 @@
 - 화면 맨 아래에 InterSection Observer가 관측하는 div를 넣는다
 - div가 관측될 때마다 data에 있는 데이터를 6개씩 list에 추가한다
 
-url : [http://geemhunsu.s3-website.ap-northeast-2.amazonaws.com/]
+url : http://geemhunsu.s3-website.ap-northeast-2.amazonaws.com/
