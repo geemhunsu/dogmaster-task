@@ -14,16 +14,7 @@ function App() {
   const [dataPage, setDataPage] = React.useState(1)
   const [isLoading, setIsLoading] = React.useState(true)
   const [over, setOver] = React.useState(false)
-
-  const getMoreList = () => {
-    setIsLoading(true)
-    console.log(data)
-    console.log(page)
-    if(!data[(page + 1) * 6 + 5]) setDataPage(dataPage => dataPage + 1)
-    setList(list => [...list, ...data.slice(page * 6, page * 6 + 6)])
-    setPage(page => page + 1)
-    setIsLoading(false)
-  }
+  const [firstLoading, setFirstLoading] = React.useState(true)
 
   React.useEffect(() => {
     if(over) return
@@ -31,34 +22,33 @@ function App() {
     .then(res => {                
       setIsLoading(true)
       if (list.length === 0) {
-        setList(res.data.list.slice(0, 6))
         setDataPage(dataPage => dataPage + 1)
+        setList(res.data.list.slice(0, 6))     
       }
         setData(data => [...data, ...res.data.list]);      
         setIsLoading(false)
       })
-      .catch(err => {
-        console.log(err.response)
+      .catch(err => {        
         if(err.response.status === 404) setOver(true)
-      })
-    console.log('데이터', data)
-    console.log('데이터페이지', dataPage)
-    console.log('리스트', list)
+      })   
   }, [dataPage])
   
-  if (data.length === 0) {    
-    return <div>로딩중</div>
-  }  
+  if (data.length === 0) {
+    return <NowLoading>
+      <p>. . . 로딩중 . . .</p>
+    </NowLoading>
+  }
+  console.log(list)
   return (
     <React.Fragment>     
       <Container className="App">        
         {list.map((list, idx) => {          
-          if(idx < page * 6) return <Card key={idx} title={list.title} contents={list.contents}
-            image={list.image} idx={idx} />
+          return <Card key={idx} title={list.title} contents={list.contents}
+          image={list.image} idx={idx} />
         })}
       </Container>      
       {isLoading ? '' : <InfinityScroll setIsLoading={setIsLoading} data={data}
-        setDataPage={setDataPage} setList={setList} page={page} setPage={setPage} />}
+        setDataPage={setDataPage} list={list} setList={setList} page={page} setPage={setPage} />}
     </React.Fragment>
   );
 }
@@ -70,6 +60,16 @@ const Container = styled.div`
   display: flex;
   justify-content: space-evenly;
   flex-wrap: wrap;  
+`;
+
+const NowLoading = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  
+  p {
+    font-size: 24px;
+  }
 `;
 
 export default App;
