@@ -13,8 +13,7 @@ function App() {
   const [page, setPage] = React.useState(1)
   const [dataPage, setDataPage] = React.useState(1)
   const [isLoading, setIsLoading] = React.useState(true)
-  const [over, setOver] = React.useState(false)
-  const [firstLoading, setFirstLoading] = React.useState(true)
+  const [over, setOver] = React.useState(false)  
 
   React.useEffect(() => {
     if(over) return
@@ -25,7 +24,7 @@ function App() {
         setDataPage(dataPage => dataPage + 1)
         setList(res.data.list.slice(0, 6))     
       }
-        setData(data => [...data, ...res.data.list]);      
+      setData(data => [...data, ...res.data.list]);      
         setIsLoading(false)
       })
       .catch(err => {        
@@ -37,8 +36,7 @@ function App() {
     return <NowLoading>
       <p>. . . 로딩중 . . .</p>
     </NowLoading>
-  }
-  console.log(list)
+  }  
   return (
     <React.Fragment>     
       <Container className="App">        
