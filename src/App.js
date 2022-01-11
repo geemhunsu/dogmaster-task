@@ -14,12 +14,12 @@ function App() {
   const [dataPage, setDataPage] = React.useState(1)
   const [isLoading, setIsLoading] = React.useState(true)
   const [over, setOver] = React.useState(false)  
-
+  
   React.useEffect(() => {
     if(over) return
     axios.get(`https://my-json-server.typicode.com/dmlafiki/jsons/data/${dataPage}`)
     .then(res => {                
-      setIsLoading(true)      
+      setIsLoading(true)
       if (list.length === 0) {
         // 저는 한번에 6개씩 리스트를 표시했습니다. 한번에 불러오는 데이터 갯수는 10개 여서 
         // 불러오는 순서가 6개 > 4개 > 6개 > 6개...가 되었는데 이를 방지하고자
@@ -34,7 +34,7 @@ function App() {
         if(err.response.status === 404) setOver(true)
       })   
   }, [dataPage])
-  
+  console.log(data)
   if (data.length === 0) {
     return <NowLoading>
       <p>. . . 로딩중 . . .</p>
@@ -50,7 +50,7 @@ function App() {
       </Container>
       {/* list를 갱신하는 동안에는 InfinityScroll컴포넌트가 관측되지 않아야 하기 때문에
       isLoading이라는 값을 사용하여 로딩중이 아닐 때만 보여지게 했습니다 */}
-      {isLoading ? '' : <InfinityScroll setIsLoading={setIsLoading} data={data}
+      {isLoading ? '' : <InfinityScroll setIsLoading={setIsLoading} data={data} over={over}
         setDataPage={setDataPage} list={list} setList={setList} page={page} setPage={setPage} />}
     </React.Fragment>
   );
