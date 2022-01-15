@@ -23,18 +23,22 @@ function App() {
       if (list.length === 0) {
         // 저는 한번에 6개씩 리스트를 표시했습니다. 한번에 불러오는 데이터 갯수는 10개 여서 
         // 불러오는 순서가 6개 > 4개 > 6개 > 6개...가 되었는데 이를 방지하고자
-        // 첫 랜더링 시에 data에 20개의 데이터를 채웠습니다
-        setDataPage(dataPage => dataPage + 1)
-        setList(res.data.list.slice(0, 6))     
+        // 첫 랜더링 시에 data에 20개의 데이터를 채웠습니다        
+        setList(res.data.list.slice(0, 6))  
       }
-      setData(data => [...data, ...res.data.list]);      
-        setIsLoading(false)
+      setData(data => [...data, ...res.data.list]);
+      
+      setIsLoading(prev => !prev)
+      console.log('1번 유즈이팩트')
       })
       .catch(err => {        
-        if(err.response.status === 404) setOver(true)
+        if(err.response.status === 404) setOver(prev => !prev)
       })   
   }, [dataPage])
-  console.log(data)
+  React.useEffect(() => {
+    if(dataPage === 1) setDataPage(prev => prev + 1)
+    console.log('2번 유즈이팩트')
+  }, [])  
   if (data.length === 0) {
     return <NowLoading>
       <p>. . . 로딩중 . . .</p>
