@@ -7,6 +7,8 @@ import InfinityScroll from './components/InfinityScroll';
 
 import './App.css';
 
+const Main = React.lazy(() => import('./components/Main'));
+
 function App() {  
   const [data, setData] = React.useState([])  
   const [list, setList] = React.useState([])
@@ -47,15 +49,18 @@ function App() {
   return (
     <React.Fragment>     
       <Container className="App">        
-        {list.map((list, idx) => {          
+        {/* {list.map((list, idx) => {          
           return <Card key={idx} title={list.title} contents={list.contents}
           image={list.image} idx={idx} />
-        })}
+        })} */}
+        <React.Suspense fallback={<div>...로딩중...</div>} >
+          <Main/>
+        </React.Suspense>
       </Container>
       {/* list를 갱신하는 동안에는 InfinityScroll컴포넌트가 관측되지 않아야 하기 때문에
       isLoading이라는 값을 사용하여 로딩중이 아닐 때만 보여지게 했습니다 */}
-      {isLoading ? '' : <InfinityScroll setIsLoading={setIsLoading} data={data} over={over}
-        setDataPage={setDataPage} list={list} setList={setList} page={page} setPage={setPage} />}
+      {/* {isLoading ? '' : <InfinityScroll setIsLoading={setIsLoading} data={data} over={over}
+        setDataPage={setDataPage} list={list} setList={setList} page={page} setPage={setPage} />} */}
     </React.Fragment>
   );
 }

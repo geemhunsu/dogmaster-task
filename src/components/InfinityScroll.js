@@ -15,7 +15,8 @@ const InfinityScroll = ({setIsLoading, data, setDataPage, list, setList, page, s
     };
   });  
   React.useEffect(() => {
-    getMoreObserver.observe(getMoreTrigger.current);    
+    getMoreObserver.observe(getMoreTrigger.current);
+    return () => getMoreObserver.disconnect();
   }, [])
   return <div ref={getMoreTrigger} style={{height: 50}} />
 };
